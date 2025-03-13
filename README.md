@@ -60,3 +60,55 @@ As métricas consideradas para o estudo incluem:
 - **Ferramenta CK para análise de código**
 - **Python para análise estatística e geração de gráficos**
 - **Pandas para a geração de gráficos**
+
+## 🛠️ Passo a Passo Para Executar o Código
+
+### **1️⃣ Configurar o Ambiente**  
+Antes de iniciar, certifique-se de ter **Python 3.8+** instalado. Se necessário, crie um ambiente virtual para manter as dependências organizadas:
+
+```sh
+python -m venv venv
+```
+
+Ative o ambiente virtual:  
+- **Windows**:  
+  ```sh
+  .\venv\Scripts\Activate
+  ```
+- **Mac/Linux**:  
+  ```sh
+  source venv/bin/activate
+  ```
+
+Instale as dependências do projeto:
+```sh
+pip install -r requirements.txt
+```
+
+---
+
+### **2️⃣ Configurar o Token do GitHub**  
+Para acessar a API do GitHub, você precisa de um **Personal Access Token**.  
+
+1. Vá até [GitHub Tokens](https://github.com/settings/tokens).  
+2. Gere um token com permissões de **leitura de repositórios**.  
+3. No arquivo `config.py`, substitua:  
+
+   ```python
+   GITHUB_TOKEN = "SEU_TOKEN_AQUI"
+   ```
+
+---
+
+### **3️⃣ Coletar os 1000 Repositórios Java Mais Populares**  
+Para obter os repositórios e armazená-los em um arquivo CSV, execute:
+
+```sh
+python main.py
+```
+
+Isso irá:  
+✅ Buscar os **1000 repositórios Java mais populares**.  
+✅ Gerar um arquivo `top_java_repos.csv` contendo os dados coletados.  
+
+---
