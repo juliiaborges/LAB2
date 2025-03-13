@@ -1,7 +1,5 @@
 # Laboratório 02 - Análise de Qualidade de Repositórios Java
 
-## Introdução
-
 No desenvolvimento de sistemas open-source, a qualidade do código pode ser impactada por diversos fatores, como a modularidade, manutenibilidade e legibilidade. Neste contexto, este projeto tem como objetivo **analisar a qualidade de repositórios Java utilizando métricas de produto** extraídas pela ferramenta **CK**.
 
 ## Metas
