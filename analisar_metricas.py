@@ -31,3 +31,5 @@ for metrica in metricas_qualidade:
 
 # Exporta resultados se quiser salvar no disco
 estatisticas_gerais.to_csv('resumo_estatistico_geral.csv')
+
+
