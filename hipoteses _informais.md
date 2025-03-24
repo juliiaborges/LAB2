@@ -14,4 +14,4 @@ Antes de realizar a análise quantitativa, é útil levantar hipóteses informai
 **Hipótese:** Repositórios mais ativos (com mais commits e releases frequentes) devem ter uma qualidade de código superior, pois são constantemente melhorados e corrigidos. 
 
 ### RQ04: Qual a relação entre o tamanho dos repositórios e suas características de qualidade?  
-**Hipótese:** Repositórios maiores (com mais linhas de código) podem ter código mais modular e bem estruturado, mas também podem sofrer com maior acoplamento e complexidade. Projetos muito pequenos podem ter código mais simples e direto, mas podem não seguir boas práticas de engenharia de software.  
+**Hipótese:** Repositórios maiores (com mais linhas de código) podem ter código maior complexidade, o que pode impactar negativamente sua manutenção.  
