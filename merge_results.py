@@ -3,7 +3,6 @@ import pandas as pd
 
 BATCHES_DIR = "batches"
 METRICS_DIR = "metrics"
-PROCESS_METRICS_FILE = "metrics_process.csv"
 
 def carregar_batches():
     arquivos = [f for f in os.listdir(BATCHES_DIR) if f.endswith(".csv")]
@@ -11,13 +10,6 @@ def carregar_batches():
     df = pd.concat(dfs, ignore_index=True)
     df["name"] = df["name"].str.strip()
     return df
-
-def carregar_metricas_processuais():
-    if os.path.exists(PROCESS_METRICS_FILE):
-        df = pd.read_csv(PROCESS_METRICS_FILE)
-        df["name"] = df["name"].str.strip()
-        return df
-    return pd.DataFrame()
 
 def carregar_metricas_ck():
     resultados = []
@@ -37,16 +29,21 @@ def carregar_metricas_ck():
     return pd.DataFrame(resultados)
 
 def juntar_metricas():
+    print("📦 Carregando batches...")
     df_repos = carregar_batches()
-    df_process = carregar_metricas_processuais()
+
+    print("📊 Carregando métricas CK...")
     df_qualidade = carregar_metricas_ck()
 
-    if not df_process.empty:
-        df_repos = pd.merge(df_repos, df_process, on="name", how="left")
+    print("🔗 Unificando dados...")
+    if not df_qualidade.empty:
+        df_final = pd.merge(df_repos, df_qualidade, on="name", how="left")
+    else:
+        df_final = df_repos
 
-    df_final = pd.merge(df_repos, df_qualidade, on="name", how="left")
     df_final.to_csv("metricas_finais.csv", index=False)
-    print("Arquivo 'metricas_finais.csv' gerado com sucesso!")
+    print("✅ Arquivo 'metricas_finais.csv' gerado com sucesso!")
+    print("📁 Caminho:", os.path.abspath("metricas_finais.csv"))
 
 if __name__ == "__main__":
     juntar_metricas()
