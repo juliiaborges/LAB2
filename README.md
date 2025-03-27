@@ -61,38 +61,33 @@ As métricas consideradas para o estudo incluem:
 - **Python para análise estatística e geração de gráficos**
 - **Pandas para a geração de gráficos**
 
-## 🛠️ Passo a Passo Para Executar o Código
+# Passo a Passo Para Reprodução do Experimento
 
-### **1️⃣ Configurar o Ambiente**  
-Antes de iniciar, certifique-se de ter **Python 3.8+** instalado. Se necessário, crie um ambiente virtual para manter as dependências organizadas:
+## 1. Configurar o Ambiente
+Antes de começar, certifique-se de ter **Python 3.8+** instalado. Para manter as dependências organizadas, crie um ambiente virtual:
 
 ```sh
-python -m venv venv
+python -m venv .venv
 ```
 
-Ative o ambiente virtual:  
-- **Windows**:  
+Ative o ambiente virtual:
+- **Windows**:
   ```sh
   .\venv\Scripts\Activate
   ```
-- **Mac/Linux**:  
+- **Mac/Linux**:
   ```sh
   source venv/bin/activate
   ```
 
-Instale as dependências do projeto:
-```sh
-pip install -r requirements.txt
-```
-
 ---
 
-### **2️⃣ Configurar o Token do GitHub**  
-Para acessar a API do GitHub, você precisa de um **Personal Access Token**.  
+## 2. Configurar o Token do GitHub
+Para acessar a API do GitHub, você precisa de um **Personal Access Token**.
 
-1. Vá até [GitHub Tokens](https://github.com/settings/tokens).  
-2. Gere um token com permissões de **leitura de repositórios**.  
-3. No arquivo `config.py`, substitua:  
+1. Acesse [GitHub Tokens](https://github.com/settings/tokens).
+2. Gere um token com permissões de **leitura de repositórios**.
+3. No arquivo `config.py`, substitua a linha:
 
    ```python
    GITHUB_TOKEN = "SEU_TOKEN_AQUI"
@@ -100,15 +95,62 @@ Para acessar a API do GitHub, você precisa de um **Personal Access Token**.
 
 ---
 
-### **3️⃣ Coletar os 1000 Repositórios Java Mais Populares**  
-Para obter os repositórios e armazená-los em um arquivo CSV, execute:
+## 3. Coletar os 1000 Repositórios Java Mais Populares
+Para coletar os repositórios e armazená-los em um arquivo CSV, execute:
 
 ```sh
 python main.py
 ```
 
-Isso irá:  
-✅ Buscar os **1000 repositórios Java mais populares**.  
-✅ Gerar um arquivo `top_java_repos.csv` contendo os dados coletados.  
+Este comando irá:
+- Buscar os **1000 repositórios Java mais populares**.
+- Gerar um arquivo `top_java_repos.csv` com os dados coletados.
 
 ---
+
+## 4. Clonando os 1000 Repositórios em 10 Batches
+Os 1000 repositórios foram divididos em **10 grupos de 100** na pasta `batches`. Cada grupo é clonado, analisado e excluído após a extração das métricas, reduzindo o uso de memória.
+
+### Clonando os Repositórios
+Execute o seguinte comando, substituindo `X` pelo número do batch (1 a 10):
+
+```sh
+python clone_repos_batch.py batches/batch_X.csv
+```
+
+### Extraindo Métricas dos Repositórios
+Após a clonagem, extraia as métricas com:
+
+```sh
+python analyze_batch.py batches/batch_X.csv
+```
+
+Isso gerará arquivos `batch_X.csv` com as métricas de cada lote.
+
+---
+
+## 5. Adicionar Releases e Idade dos Repositórios
+Para cada batch processado (`batch_X.csv`), adicione informações sobre releases e idade do repositório executando:
+
+```sh
+python add_process_metrics.py batches/batch_X.csv
+```
+
+Isso criará arquivos como:
+
+```sh
+batches/batch_0_with_process.csv
+batches/batch_1_with_process.csv
+...
+```
+
+---
+
+## 6. Consolidar os Dados em um Arquivo Final
+Para gerar um arquivo final consolidado com as métricas de processo e as métricas CK:
+1. Renomeie ou una todos os arquivos `_with_process.csv` em um único arquivo chamado:
+   ```sh
+   metrics_process.csv
+   ```
+
+Após esse processo, o conjunto final de métricas estará pronto para análise.
